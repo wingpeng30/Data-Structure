@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct SNode *Stack;
+struct SNode{
+    int Data;
+    struct SNode *next;
+};
+
+// top在链表最左端（方便插入、删除）
+// 有一个空的头结点 方便操作
+Stack Stackcreate()
+{
+    Stack S;
+    S=(Stack)malloc(sizeof(struct SNode));
+    S->next=NULL;
+    return S;
+}
+
+int Isempty(Stack S)
+{
+    return (S->next==NULL);
+}
+
+void Push(Stack S,int item)
+{
+    Stack tmp;
+    tmp=(Stack)malloc(sizeof(struct SNode));
+    tmp->Data=item;
+    tmp->next=S->next;
+    S->next=tmp;
+}
+
+int Pop(Stack S)
+{   
+    Stack Firstcell;
+    int Topelem;
+    if(Isempty(S))
+    {
+        printf("表空");
+        return -1;
+    }
+    else
+    {
+        Firstcell=S->next;
+        S->next=Firstcell->next;
+        Topelem=Firstcell->Data;
+        free(Firstcell);
+        return Topelem;
+    }
+}
